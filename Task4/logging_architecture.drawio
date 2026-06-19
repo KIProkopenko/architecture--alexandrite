@@ -1,0 +1,103 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0" version="24.9.1">
+  <diagram name="Logging Architecture" id="logging-scheme">
+    <mxGraphModel dx="1426" dy="789" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        
+        <!-- Sources -->
+        <mxCell id="src-shop" value="Shop API&lt;br&gt;(SpringBoot)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#23A2D9;strokeColor=#0E7DAD;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="100" y="100" width="120" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="src-crm" value="CRM API&lt;br&gt;(SpringBoot)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#23A2D9;strokeColor=#0E7DAD;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="100" y="200" width="120" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="src-mes" value="MES API&lt;br&gt;(C#)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#23A2D9;strokeColor=#0E7DAD;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="100" y="300" width="120" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="src-rmq" value="RabbitMQ" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#23A2D9;strokeColor=#0E7DAD;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="100" y="400" width="120" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="src-db" value="PostgreSQL&lt;br&gt;(Shop/MES DB)" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#23A2D9;strokeColor=#0E7DAD;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="100" y="520" width="120" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- Agents -->
+        <mxCell id="agent-filebeat" value="Filebeat /&lt;br&gt;Fluent Bit" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="300" y="200" width="100" height="250" as="geometry"/>
+        </mxCell>
+
+        <!-- Buffer -->
+        <mxCell id="kafka" value="Kafka&lt;br&gt;(Buffer)" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="500" y="240" width="100" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- Processor -->
+        <mxCell id="logstash" value="Logstash&lt;br&gt;(Parse &amp; Mask)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="700" y="240" width="120" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- Storage -->
+        <mxCell id="elasticsearch" value="Elasticsearch&lt;br&gt;(Storage)" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#666666;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="920" y="240" width="120" height="120" as="geometry"/>
+        </mxCell>
+
+        <!-- Visualization -->
+        <mxCell id="kibana" value="Kibana&lt;br&gt;(Visualization)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E1D5E7;strokeColor=#9673A6;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1150" y="200" width="120" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- Alerting -->
+        <mxCell id="prometheus" value="Prometheus&lt;br&gt;(Metrics from Logs)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1150" y="320" width="120" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="alertmanager" value="Alertmanager" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="1350" y="320" width="120" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="notify" value="Telegram / Slack / Jira" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontColor=#000000;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="1550" y="320" width="120" height="80" as="geometry"/>
+        </mxCell>
+
+        <!-- Connections -->
+        <mxCell id="conn-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="src-shop" target="agent-filebeat">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="conn-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="src-crm" target="agent-filebeat">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="conn-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="src-mes" target="agent-filebeat">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="conn-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="src-rmq" target="agent-filebeat">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="conn-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="src-db" target="agent-filebeat">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        
+        <mxCell id="conn-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="agent-filebeat" target="kafka">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="conn-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="kafka" target="logstash">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="conn-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="logstash" target="elasticsearch">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="conn-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="elasticsearch" target="kibana">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="conn-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="elasticsearch" target="prometheus">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="conn-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="prometheus" target="alertmanager">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="conn-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="alertmanager" target="notify">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
